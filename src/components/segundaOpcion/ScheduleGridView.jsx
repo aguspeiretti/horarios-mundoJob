@@ -80,7 +80,7 @@ const ScheduleGridView = () => {
           Horarios Globales
         </h2>
         <div className="flex gap-4">
-          <select
+          {/* <select
             value={selectedTimeZone}
             onChange={(e) => setSelectedTimeZone(e.target.value)}
             className="px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:ring-2 focus:ring-purple-500 focus:outline-none"
@@ -90,7 +90,7 @@ const ScheduleGridView = () => {
                 Ver en hora de {city}
               </option>
             ))}
-          </select>
+          </select> */}
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
