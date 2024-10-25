@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Clock, Globe, Users } from "lucide-react";
+import { Clock, Globe, Users, ChevronUp, ChevronDown } from "lucide-react";
 import {
   DndContext,
   closestCenter,
@@ -22,6 +22,7 @@ const ScheduleGridView = () => {
   const [selectedArea, setSelectedArea] = useState("all");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeId, setActiveId] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [selectedTimeZone, setSelectedTimeZone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
@@ -32,10 +33,24 @@ const ScheduleGridView = () => {
       : Object.keys(groupSchedulesByArea(scheduleData));
   });
 
+  // Detectar si es dispositivo móvil
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8, // Distancia mínima para activar el arrastre
+        distance: 8,
+        // Desactivar en móviles
+        delay: isMobile ? Infinity : 0,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -116,8 +131,10 @@ const ScheduleGridView = () => {
   const groupedByArea = groupSchedulesByArea(filteredData);
 
   const handleDragStart = (event) => {
-    setActiveId(event.active.id);
-    document.body.style.cursor = "grabbing";
+    if (!isMobile) {
+      setActiveId(event.active.id);
+      document.body.style.cursor = "grabbing";
+    }
   };
 
   const handleDragEnd = (event) => {
@@ -138,6 +155,39 @@ const ScheduleGridView = () => {
     setActiveId(null);
     document.body.style.cursor = "";
   };
+
+  const moveArea = (areaId, direction) => {
+    const currentIndex = areaOrder.indexOf(areaId);
+    const newIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+
+    if (newIndex >= 0 && newIndex < areaOrder.length) {
+      setAreaOrder((items) => arrayMove(items, currentIndex, newIndex));
+    }
+  };
+
+  const content = (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {areaOrder
+        .filter((area) => groupedByArea[area])
+        .map((area, index) => (
+          <SortableArea
+            key={area}
+            id={area}
+            area={area}
+            schedules={groupedByArea[area]}
+            getCurrentTimeInZone={getCurrentTimeInZone}
+            isCurrentlyWorking={isCurrentlyWorking}
+            timeZones={timeZones}
+            isDragging={activeId === area}
+            isMobile={isMobile}
+            isFirst={index === 0}
+            isLast={index === areaOrder.length - 1}
+            onMoveUp={() => moveArea(area, "up")}
+            onMoveDown={() => moveArea(area, "down")}
+          />
+        ))}
+    </div>
+  );
 
   return (
     <div className="w-full bg-gray-900 p-6">
@@ -161,46 +211,35 @@ const ScheduleGridView = () => {
         </div>
       </div>
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragCancel={handleDragCancel}
-      >
-        <SortableContext items={areaOrder} strategy={rectSortingStrategy}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {areaOrder
-              .filter((area) => groupedByArea[area])
-              .map((area) => (
-                <SortableArea
-                  key={area}
-                  id={area}
-                  area={area}
-                  schedules={groupedByArea[area]}
-                  getCurrentTimeInZone={getCurrentTimeInZone}
-                  isCurrentlyWorking={isCurrentlyWorking}
-                  timeZones={timeZones}
-                  isDragging={activeId === area}
-                />
-              ))}
-          </div>
-        </SortableContext>
-        <DragOverlay adjustScale={true}>
-          {activeId ? (
-            <SortableArea
-              id={activeId}
-              area={activeId}
-              schedules={groupedByArea[activeId]}
-              getCurrentTimeInZone={getCurrentTimeInZone}
-              isCurrentlyWorking={isCurrentlyWorking}
-              timeZones={timeZones}
-              isDragging={true}
-              overlay
-            />
-          ) : null}
-        </DragOverlay>
-      </DndContext>
+      {isMobile ? (
+        content
+      ) : (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+          onDragCancel={handleDragCancel}
+        >
+          <SortableContext items={areaOrder} strategy={rectSortingStrategy}>
+            {content}
+          </SortableContext>
+          <DragOverlay adjustScale={true}>
+            {activeId ? (
+              <SortableArea
+                id={activeId}
+                area={activeId}
+                schedules={groupedByArea[activeId]}
+                getCurrentTimeInZone={getCurrentTimeInZone}
+                isCurrentlyWorking={isCurrentlyWorking}
+                timeZones={timeZones}
+                isDragging={true}
+                overlay
+              />
+            ) : null}
+          </DragOverlay>
+        </DndContext>
+      )}
     </div>
   );
 };

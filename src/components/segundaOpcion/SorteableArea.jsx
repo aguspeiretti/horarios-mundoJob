@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Globe, Users } from "lucide-react";
+import { Globe, Users, ChevronUp, ChevronDown } from "lucide-react";
 
 export function SortableArea({
   id,
@@ -11,6 +11,11 @@ export function SortableArea({
   timeZones,
   isDragging,
   overlay,
+  isMobile,
+  isFirst,
+  isLast,
+  onMoveUp,
+  onMoveDown,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
@@ -22,18 +27,44 @@ export function SortableArea({
     scale: overlay ? "1.05" : "1",
   };
 
+  const renderMobileControls = () => {
+    if (!isMobile) return null;
+
+    return (
+      <div className="flex gap-2 ml-2">
+        {!isFirst && (
+          <button
+            onClick={onMoveUp}
+            className="p-1 hover:bg-gray-700 rounded-full transition-colors"
+          >
+            <ChevronUp className="w-4 h-4 text-gray-400" />
+          </button>
+        )}
+        {!isLast && (
+          <button
+            onClick={onMoveDown}
+            className="p-1 hover:bg-gray-700 rounded-full transition-colors"
+          >
+            <ChevronDown className="w-4 h-4 text-gray-400" />
+          </button>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
+      {...(!isMobile ? { ...attributes, ...listeners } : {})}
       className={`bg-gray-800 border border-gray-700 rounded-xl p-4 shadow-lg hover:shadow-xl transition-all duration-200 
         ${!overlay ? "hover:border-purple-500/50" : ""}
         ${
           isDragging
             ? "ring-2 ring-purple-500 cursor-grabbing"
-            : "cursor-grab active:cursor-grabbing"
+            : !isMobile
+            ? "cursor-grab active:cursor-grabbing"
+            : ""
         }
         ${overlay ? "shadow-2xl" : ""}
       `}
@@ -45,6 +76,7 @@ export function SortableArea({
           }`}
         />
         <h3 className="text-lg font-semibold text-white">{area}</h3>
+        {renderMobileControls()}
       </div>
       <div className="space-y-4">
         {schedules.map((schedule, idx) => {
