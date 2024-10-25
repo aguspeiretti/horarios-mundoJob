@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
@@ -32,20 +33,31 @@ const WorkScheduleViewer = () => {
     ...new Set(scheduleData.map((item) => item.area)),
   ];
 
-  const convertTime = (time, fromZone, toZone) => {
-    const [hours, minutes] = time.split(":").map(Number);
+  const convertTime = (timeStr, fromZone, toZone) => {
+    const [hours, minutes] = timeStr.split(":").map(Number);
     const date = new Date();
     date.setHours(hours, minutes, 0);
 
-    const fromTime = new Date(
+    // Crear fechas con las zonas horarias correctas
+    const fromDateTime = new Date(
       date.toLocaleString("en-US", { timeZone: fromZone })
     );
-    const toTime = new Date(date.toLocaleString("en-US", { timeZone: toZone }));
+    const toDateTime = new Date(
+      date.toLocaleString("en-US", { timeZone: toZone })
+    );
 
-    const diffMs = toTime - fromTime;
-    const adjustedDate = new Date(date.getTime() + diffMs);
+    // Calcular la diferencia en minutos
+    const diffMinutes = (toDateTime - fromDateTime) / (1000 * 60);
 
-    return adjustedDate.toLocaleTimeString("es-ES", {
+    // Ajustar la hora
+    const adjustedHours = hours + Math.floor(diffMinutes / 60);
+    const adjustedMinutes = minutes + (diffMinutes % 60);
+
+    // Formatear el resultado
+    const resultDate = new Date();
+    resultDate.setHours(adjustedHours, adjustedMinutes, 0);
+
+    return resultDate.toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
@@ -53,7 +65,7 @@ const WorkScheduleViewer = () => {
   };
 
   const getCurrentTimeInZone = (timezone) => {
-    return new Date().toLocaleTimeString("es-ES", {
+    return currentTime.toLocaleTimeString("es-ES", {
       timeZone: timezone,
       hour: "2-digit",
       minute: "2-digit",
@@ -63,7 +75,7 @@ const WorkScheduleViewer = () => {
 
   const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
+    return (hours * 60 + minutes + 24 * 60) % (24 * 60); // Manejo de horas pasadas de medianoche
   };
 
   const minutesToPosition = (minutes) => {
@@ -78,6 +90,11 @@ const WorkScheduleViewer = () => {
     const current = timeToMinutes(currentTime);
     const startMin = timeToMinutes(start);
     const endMin = timeToMinutes(end);
+
+    // Manejar casos donde el rango cruza la medianoche
+    if (startMin > endMin) {
+      return current >= startMin || current <= endMin;
+    }
     return current >= startMin && current <= endMin;
   };
 
@@ -100,6 +117,7 @@ const WorkScheduleViewer = () => {
       hour12: false,
     });
   };
+
   return (
     <div className="w-[100vw]  mx-auto bg-gray-900 py-4 px-24 shadow-xl ">
       <div className="mb-8">
