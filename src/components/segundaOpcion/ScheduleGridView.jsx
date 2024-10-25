@@ -1,11 +1,46 @@
 import { useState, useEffect } from "react";
 import { Clock, Globe, Users } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragOverlay,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { SortableArea } from "./SorteableArea";
 import scheduleData from "../nuevoWidget/schedulData";
+
 const ScheduleGridView = () => {
   const [selectedArea, setSelectedArea] = useState("all");
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [activeId, setActiveId] = useState(null);
   const [selectedTimeZone, setSelectedTimeZone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+  const [areaOrder, setAreaOrder] = useState(() => {
+    const savedOrder = localStorage.getItem("areaOrder");
+    return savedOrder
+      ? JSON.parse(savedOrder)
+      : Object.keys(groupSchedulesByArea(scheduleData));
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Distancia mínima para activar el arrastre
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
   );
 
   const timeZones = {
@@ -26,6 +61,10 @@ const ScheduleGridView = () => {
     }, 60000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("areaOrder", JSON.stringify(areaOrder));
+  }, [areaOrder]);
 
   const getCurrentTimeInZone = (timezone) => {
     return currentTime.toLocaleTimeString("es-ES", {
@@ -66,11 +105,39 @@ const ScheduleGridView = () => {
     (item) => selectedArea === "all" || item.area === selectedArea
   );
 
-  const groupedByArea = filteredData.reduce((acc, item) => {
-    if (!acc[item.area]) acc[item.area] = [];
-    acc[item.area].push(item);
-    return acc;
-  }, {});
+  function groupSchedulesByArea(data) {
+    return data.reduce((acc, item) => {
+      if (!acc[item.area]) acc[item.area] = [];
+      acc[item.area].push(item);
+      return acc;
+    }, {});
+  }
+
+  const groupedByArea = groupSchedulesByArea(filteredData);
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+    document.body.style.cursor = "grabbing";
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      setAreaOrder((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+    setActiveId(null);
+    document.body.style.cursor = "";
+  };
+
+  const handleDragCancel = () => {
+    setActiveId(null);
+    document.body.style.cursor = "";
+  };
 
   return (
     <div className="w-full bg-gray-900 p-6">
@@ -80,17 +147,6 @@ const ScheduleGridView = () => {
           Horarios Globales
         </h2>
         <div className="flex gap-4">
-          {/* <select
-            value={selectedTimeZone}
-            onChange={(e) => setSelectedTimeZone(e.target.value)}
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-          >
-            {Object.entries(timeZones).map(([city, tz]) => (
-              <option key={tz} value={tz}>
-                Ver en hora de {city}
-              </option>
-            ))}
-          </select> */}
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
@@ -105,70 +161,46 @@ const ScheduleGridView = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Object.entries(groupedByArea).map(([area, schedules]) => (
-          <div
-            key={area}
-            className="bg-gray-800 border border-gray-700 rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-200"
-          >
-            <div className="flex items-center gap-2 mb-4 border-b border-gray-700 pb-2">
-              <Users className="w-5 h-5 text-purple-400" />
-              <h3 className="text-lg font-semibold text-white">{area}</h3>
-            </div>
-            <div className="space-y-4">
-              {schedules.map((schedule, idx) => {
-                const isWorking = isCurrentlyWorking(schedule);
-                const localTime = getCurrentTimeInZone(
-                  timeZones[schedule.oficina]
-                );
-
-                return (
-                  <div
-                    key={idx}
-                    className={`p-3 rounded-lg transition-colors duration-200 ${
-                      isWorking
-                        ? "bg-green-900/20 border border-green-500/30 hover:bg-green-900/30"
-                        : "bg-gray-700/30 hover:bg-gray-700/40"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Globe className="w-4 h-4 text-gray-400" />
-                        <span className="text-white font-medium">
-                          {schedule.oficina}
-                        </span>
-                      </div>
-                      <div
-                        className={`px-2 py-1 rounded-full text-sm ${
-                          isWorking
-                            ? "bg-green-900/40 text-green-400"
-                            : "bg-gray-700 text-gray-400"
-                        }`}
-                      >
-                        {localTime}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-sm mt-2">
-                      <div className="text-gray-400">
-                        Horario:{" "}
-                        <span className="text-white">
-                          {schedule.inicio} - {schedule.fin}
-                        </span>
-                      </div>
-                      <div className="text-gray-400">
-                        Break:{" "}
-                        <span className="text-white">
-                          {schedule.breakInicio} - {schedule.breakFin}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={areaOrder} strategy={rectSortingStrategy}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {areaOrder
+              .filter((area) => groupedByArea[area])
+              .map((area) => (
+                <SortableArea
+                  key={area}
+                  id={area}
+                  area={area}
+                  schedules={groupedByArea[area]}
+                  getCurrentTimeInZone={getCurrentTimeInZone}
+                  isCurrentlyWorking={isCurrentlyWorking}
+                  timeZones={timeZones}
+                  isDragging={activeId === area}
+                />
+              ))}
           </div>
-        ))}
-      </div>
+        </SortableContext>
+        <DragOverlay adjustScale={true}>
+          {activeId ? (
+            <SortableArea
+              id={activeId}
+              area={activeId}
+              schedules={groupedByArea[activeId]}
+              getCurrentTimeInZone={getCurrentTimeInZone}
+              isCurrentlyWorking={isCurrentlyWorking}
+              timeZones={timeZones}
+              isDragging={true}
+              overlay
+            />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
     </div>
   );
 };
