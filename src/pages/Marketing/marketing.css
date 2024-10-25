@@ -1,0 +1,19 @@
+.titulo{
+    padding:20px 0px 20px 40px
+}
+.titular{
+display: flex;
+justify-content: space-between;
+}
+.indicacion{
+    display: flex;
+    align-items: center;
+    padding-right: 50px;
+
+}
+.seña{
+    width: 30px;
+    height: 10px;
+    background-color: #3be780;
+    margin-right: 10px;
+}

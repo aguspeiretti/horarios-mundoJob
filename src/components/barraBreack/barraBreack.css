@@ -1,0 +1,7 @@
+.barrita{
+    width: 30px;
+    height: 10px;
+    background-color: red;
+    position: absolute;
+    z-index: 30;
+}
