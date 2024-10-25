@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { ClockIcon } from "@radix-ui/react-icons";
+import data from "./schedulData";
 
 const WorkScheduleViewer = () => {
+  const [selectedArea, setSelectedArea] = useState("all");
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [userTimeZone, setUserTimeZone] = useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+  const scheduleData = data;
+
   const timeZones = {
     Córdoba: "America/Argentina/Cordoba",
     Colombia: "America/Bogota",
     España: "Europe/Madrid",
     Ushuaia: "America/Argentina/Ushuaia",
   };
-
-  const [userTimeZone, setUserTimeZone] = useState(
-    Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,138 +27,6 @@ const WorkScheduleViewer = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const scheduleData = [
-    {
-      area: "Contabilidad",
-      oficina: "Córdoba",
-      inicio: "08:00",
-      fin: "17:00",
-      breakInicio: "13:00",
-      breakFin: "14:00",
-    },
-    {
-      area: "Contabilidad",
-      oficina: "Colombia",
-      inicio: "08:00",
-      fin: "18:30",
-      breakInicio: "13:00",
-      breakFin: "14:00",
-    },
-    {
-      area: "Contabilidad",
-      oficina: "España",
-      inicio: "10:00",
-      fin: "18:15",
-      breakInicio: "14:00",
-      breakFin: "14:30",
-    },
-    {
-      area: "Ventas",
-      oficina: "Colombia",
-      inicio: "08:00",
-      fin: "18:30",
-      breakInicio: "14:00",
-      breakFin: "16:00",
-    },
-    {
-      area: "Ventas",
-      oficina: "Córdoba",
-      inicio: "10:00",
-      fin: "20:30",
-      breakInicio: "14:00",
-      breakFin: "15:30",
-    },
-    {
-      area: "Ventas",
-      oficina: "España",
-      inicio: "10:00",
-      fin: "20:45",
-      breakInicio: "14:00",
-      breakFin: "17:00",
-    },
-    {
-      area: "Comunicacion",
-      oficina: "Córdoba",
-      inicio: "08:00",
-      fin: "17:00",
-      breakInicio: "12:00",
-      breakFin: "13:00",
-    },
-    {
-      area: "Recursos Humanos",
-      oficina: "Córdoba",
-      inicio: "08:00",
-      fin: "17:00",
-      breakInicio: "13:00",
-      breakFin: "14:00",
-    },
-    {
-      area: "Recursos Humanos",
-      oficina: "Ushuaia",
-      inicio: "08:00",
-      fin: "17:00",
-      breakInicio: "13:00",
-      breakFin: "14:00",
-    },
-    {
-      area: "Coordinación",
-      oficina: "Córdoba",
-      inicio: "10:00",
-      fin: "19:00",
-      breakInicio: "14:30",
-      breakFin: "15:30",
-    },
-    {
-      area: "Coordinación",
-      oficina: "España",
-      inicio: "10:00",
-      fin: "20:15",
-      breakInicio: "14:00",
-      breakFin: "16:30",
-    },
-    {
-      area: "Gestión",
-      oficina: "Córdoba",
-      inicio: "10:00",
-      fin: "19:00",
-      breakInicio: "14:30",
-      breakFin: "15:30",
-    },
-    {
-      area: "Gestión",
-      oficina: "España",
-      inicio: "10:00",
-      fin: "20:15",
-      breakInicio: "14:00",
-      breakFin: "16:30",
-    },
-    {
-      area: "Gestión",
-      oficina: "Ushuaia",
-      inicio: "07:00",
-      fin: "17:00",
-      breakInicio: "14:00",
-      breakFin: "14:45",
-    },
-    {
-      area: "Marketing",
-      oficina: "Córdoba",
-      inicio: "08:00",
-      fin: "17:00",
-      breakInicio: "13:00",
-      breakFin: "14:00",
-    },
-    {
-      area: "Marketing",
-      oficina: "España",
-      inicio: "10:00",
-      fin: "18:15",
-      breakInicio: "14:00",
-      breakFin: "14:30",
-    },
-  ];
-
-  const [selectedArea, setSelectedArea] = useState("all");
   const uniqueAreas = [
     "all",
     ...new Set(scheduleData.map((item) => item.area)),
@@ -201,15 +72,6 @@ const WorkScheduleViewer = () => {
     const totalMinutes = endOfDay - startOfDay;
     const position = ((minutes - startOfDay) / totalMinutes) * 100;
     return Math.max(0, Math.min(100, position));
-  };
-
-  const calculateDuration = (start, end) => {
-    const startMin = timeToMinutes(start);
-    const endMin = timeToMinutes(end);
-    const durationMin = endMin - startMin;
-    const hours = Math.floor(durationMin / 60);
-    const minutes = durationMin % 60;
-    return `${hours}h ${minutes}min`;
   };
 
   const isTimeInRange = (currentTime, start, end) => {
@@ -286,7 +148,7 @@ const WorkScheduleViewer = () => {
         </div>
       </div>
 
-      <div className="relative overflow-x-auto mt-8  overflow-x-hidden">
+      <div className="relative  mt-8  overflow-x-hidden">
         {/* Time labels */}
         <div className="flex justify-between mb-6 text-xs text-gray-400 ml-48 border-b border-gray-700 pb-2">
           {Array.from({ length: 15 }, (_, i) => i + 7).map((hour) => (
