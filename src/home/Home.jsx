@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import banner from "../assets/banner-02.png";
 import "./home.css";
 import WorkScheduleViewer from "../components/nuevoWidget/WorkScheduleViewer";
+import ScheduleGridView from "../components/segundaOpcion/ScheduleGridView";
+import OtraVariante from "../components/segundaOpcion/OtroVariante";
 
 const Home = () => {
   return (
@@ -13,7 +16,9 @@ const Home = () => {
         </div>
 
         <div className="contenedor-paise bg-gray-900">
-          <WorkScheduleViewer />
+          {/* <WorkScheduleViewer /> */}
+          {/* <OtraVariante /> */}
+          <ScheduleGridView />
         </div>
       </div>
     </>
