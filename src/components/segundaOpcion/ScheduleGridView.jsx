@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { Clock, Globe, Users, ChevronUp, ChevronDown } from "lucide-react";
 import {
@@ -23,9 +24,6 @@ const ScheduleGridView = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeId, setActiveId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [selectedTimeZone, setSelectedTimeZone] = useState(
-    Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
   const [areaOrder, setAreaOrder] = useState(() => {
     const savedOrder = localStorage.getItem("areaOrder");
     return savedOrder
@@ -190,12 +188,8 @@ const ScheduleGridView = () => {
   );
 
   return (
-    <div className="w-full bg-gray-900 p-6">
-      <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <Clock className="w-6 h-6" />
-          Horarios Globales
-        </h2>
+    <div className="w-full bg-black p-6">
+      <div className="mb-6 flex flex-col md:flex-row justify-end items-end md:items-center gap-4">
         <div className="flex gap-4">
           <select
             value={selectedArea}

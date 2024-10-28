@@ -1,0 +1,44 @@
+.bg-container {
+  margin: 0;
+  padding: 0;
+  height: 641px;
+  width: 100vw;
+  overflow: hidden;
+  background: #000;
+}
+.svg-button {
+  background: url("../assets/ovalo-hora-verde.svg") no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+
+  border-radius: 30px;
+}
+.svg-button2 {
+  background: url("../assets/ovalo3.svg") no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+
+  border-radius: 30px;
+}
+.svg3 {
+  background: url("../assets/titulo-sin-fondo.svg") no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 20px 30px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+
+  border-radius: 30px;
+}
