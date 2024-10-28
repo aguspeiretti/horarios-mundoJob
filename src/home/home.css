@@ -1,7 +1,7 @@
 .bg-container {
   margin: 0;
   padding: 0;
-  height: 641px;
+  height: 400px;
   width: 100vw;
   overflow: hidden;
   background: #000;
@@ -41,4 +41,14 @@
   border-radius: 15px;
 
   border-radius: 30px;
+}
+@media (min-width: 768px) {
+  .bg-container {
+    height: 641px;
+  }
+}
+@media (max-width: 1100px) {
+  .svg3 {
+    background: none;
+  }
 }

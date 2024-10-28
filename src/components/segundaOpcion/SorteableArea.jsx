@@ -89,7 +89,7 @@ export function SortableArea({
               key={idx}
               className={`p-3 rounded-lg transition-colors duration-200 ${
                 isWorking
-                  ? "bg-[#9cd2bb10] border border-[#38CD87] hover:bg-[#9cd2bb2d]"
+                  ? "bg-[#9cd2bb10] border-[1px] border-[#38CD87] hover:bg-[#9cd2bb2d]"
                   : "bg-[#8c8b8b23] hover:bg-gray-700/40"
               }`}
             >
