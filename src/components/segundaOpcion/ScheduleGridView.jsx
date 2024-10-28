@@ -194,7 +194,7 @@ const ScheduleGridView = () => {
           <select
             value={selectedArea}
             onChange={(e) => setSelectedArea(e.target.value)}
-            className="px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+            className="px-6 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
           >
             {uniqueAreas.map((area) => (
               <option key={area} value={area}>
