@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Globe, Users, ChevronUp, ChevronDown } from "lucide-react";
+import { Globe, Users, ChevronUp, ChevronDown, Clock } from "lucide-react";
 
 export function SortableArea({
   id,
@@ -100,14 +100,21 @@ export function SortableArea({
                     {schedule.oficina}
                   </span>
                 </div>
-                <div
-                  className={`px-2 py-1 rounded-full text-sm ${
-                    isWorking
-                      ? "svg-button bg-green-500/20 text-white"
-                      : "svg-button2 bg-violet-200/10 text-white"
-                  }`}
-                >
-                  {localTime}
+                <div className="flex items-center ">
+                  <Clock
+                    className={`mr-2 size-4 ${
+                      isWorking ? "  text-[#38CD87]" : "  text-gray-600"
+                    } `}
+                  />
+                  <div
+                    className={`px-2 py-1 rounded-full text-sm ${
+                      isWorking
+                        ? "svg-button bg-green-500/20 text-white"
+                        : "svg-button2 bg-violet-200/10 text-white"
+                    }`}
+                  >
+                    {localTime}
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm mt-2">
