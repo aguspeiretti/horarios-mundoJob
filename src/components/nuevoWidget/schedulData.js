@@ -10,7 +10,7 @@ const scheduleData = [
   },
   {
     area: "Contabilidad",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -46,7 +46,7 @@ const scheduleData = [
   },
   {
     area: "Ventas",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "20:30",
@@ -73,7 +73,7 @@ const scheduleData = [
   },
   {
     area: "Comunicación",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -82,7 +82,7 @@ const scheduleData = [
   },
   {
     area: "Recursos Humanos",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -100,7 +100,7 @@ const scheduleData = [
   },
   {
     area: "Coordinación",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "19:00",
@@ -118,7 +118,7 @@ const scheduleData = [
   },
   {
     area: "Gestión",
-    nombre: "Córdoba - Argentina",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "19:00",
