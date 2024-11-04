@@ -23,10 +23,17 @@ const WorkScheduleViewer = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000);
+    }, 1000); // Cambiado de 60000 a 1000 para actualización por segundo
+
+    // Asegurarse de que el tiempo inicial esté sincronizado
+    setCurrentTime(new Date());
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    setCurrentTime(new Date());
+  }, [userTimeZone]);
 
   const uniqueAreas = [
     "all",
@@ -34,44 +41,47 @@ const WorkScheduleViewer = () => {
   ];
 
   const convertTime = (timeStr, fromZone, toZone) => {
-    const [hours, minutes] = timeStr.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0);
+    try {
+      const [hours, minutes] = timeStr.split(":").map(Number);
+      const date = new Date();
+      date.setHours(hours, minutes, 0);
 
-    // Crear fechas con las zonas horarias correctas
-    const fromDateTime = new Date(
-      date.toLocaleString("en-US", { timeZone: fromZone })
-    );
-    const toDateTime = new Date(
-      date.toLocaleString("en-US", { timeZone: toZone })
-    );
+      const fromDateTime = new Date(
+        date.toLocaleString("en-US", { timeZone: fromZone })
+      );
+      const toDateTime = new Date(
+        date.toLocaleString("en-US", { timeZone: toZone })
+      );
 
-    // Calcular la diferencia en minutos
-    const diffMinutes = (toDateTime - fromDateTime) / (1000 * 60);
+      const diffMinutes = (toDateTime - fromDateTime) / (1000 * 60);
+      const adjustedHours = hours + Math.floor(diffMinutes / 60);
+      const adjustedMinutes = minutes + (diffMinutes % 60);
 
-    // Ajustar la hora
-    const adjustedHours = hours + Math.floor(diffMinutes / 60);
-    const adjustedMinutes = minutes + (diffMinutes % 60);
+      const resultDate = new Date();
+      resultDate.setHours(adjustedHours, adjustedMinutes, 0);
 
-    // Formatear el resultado
-    const resultDate = new Date();
-    resultDate.setHours(adjustedHours, adjustedMinutes, 0);
-
-    return resultDate.toLocaleTimeString("es-ES", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
+      return resultDate.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    } catch (error) {
+      console.error("Error converting time:", error);
+      return timeStr; // Retornar el tiempo original si hay error
+    }
   };
 
-  const getCurrentTimeInZone = (timezone) => {
-    return currentTime.toLocaleTimeString("es-ES", {
-      timeZone: timezone,
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-  };
+  const getCurrentTimeInZone = React.useCallback(
+    (timezone) => {
+      return currentTime.toLocaleTimeString("es-ES", {
+        timeZone: timezone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    },
+    [currentTime]
+  );
 
   const timeToMinutes = (time) => {
     const [hours, minutes] = time.split(":").map(Number);

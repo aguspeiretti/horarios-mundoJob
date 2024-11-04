@@ -97,7 +97,7 @@ export function SortableArea({
                 <div className="flex items-center gap-2">
                   <Globe className="w-4 h-4 text-gray-400" />
                   <span className="text-white font-medium">
-                    {schedule.oficina}
+                    {schedule.nombre}
                   </span>
                 </div>
                 <div className="flex items-center ">

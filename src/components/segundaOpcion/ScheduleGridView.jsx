@@ -25,7 +25,7 @@ const ScheduleGridView = () => {
   const [activeId, setActiveId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [areaOrder, setAreaOrder] = useState(() => {
-    const savedOrder = localStorage.getItem("areaOrder");
+    const savedOrder = localStorage.getItem("areaOrders");
     return savedOrder
       ? JSON.parse(savedOrder)
       : Object.keys(groupSchedulesByArea(scheduleData));
@@ -61,6 +61,9 @@ const ScheduleGridView = () => {
     Colombia: "America/Bogota",
     España: "Europe/Madrid",
     Ushuaia: "America/Argentina/Ushuaia",
+    Ecuador: "America/Guayaquil",
+    Chile: "America/Santiago",
+    Mejico: "America/Mexico_City",
   };
 
   const uniqueAreas = [

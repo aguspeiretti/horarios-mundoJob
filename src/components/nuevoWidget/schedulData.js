@@ -1,6 +1,16 @@
 const scheduleData = [
   {
+    area: "Marketing",
+    nombre: "Ecuador - Machala",
+    oficina: "Ecuador",
+    inicio: "09:00",
+    fin: "18:00",
+    breakInicio: "14:00",
+    breakFin: "15:00",
+  },
+  {
     area: "Contabilidad",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -9,6 +19,7 @@ const scheduleData = [
   },
   {
     area: "Contabilidad",
+    nombre: "Colombia - Bogotá",
     oficina: "Colombia",
     inicio: "08:00",
     fin: "18:30",
@@ -17,6 +28,7 @@ const scheduleData = [
   },
   {
     area: "Contabilidad",
+    nombre: "España - Elche",
     oficina: "España",
     inicio: "10:00",
     fin: "18:15",
@@ -25,6 +37,7 @@ const scheduleData = [
   },
   {
     area: "Ventas",
+    nombre: "Colombia - Bogotá",
     oficina: "Colombia",
     inicio: "08:00",
     fin: "18:30",
@@ -33,6 +46,7 @@ const scheduleData = [
   },
   {
     area: "Ventas",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "20:30",
@@ -41,6 +55,16 @@ const scheduleData = [
   },
   {
     area: "Ventas",
+    nombre: "México - DF",
+    oficina: "Mejico",
+    inicio: "10:00",
+    fin: "19:00",
+    breakInicio: "14:00",
+    breakFin: "16:00",
+  },
+  {
+    area: "Ventas",
+    nombre: "España - Elche",
     oficina: "España",
     inicio: "10:00",
     fin: "20:45",
@@ -48,7 +72,8 @@ const scheduleData = [
     breakFin: "17:00",
   },
   {
-    area: "Comunicacion",
+    area: "Comunicación",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -57,6 +82,7 @@ const scheduleData = [
   },
   {
     area: "Recursos Humanos",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -65,6 +91,7 @@ const scheduleData = [
   },
   {
     area: "Recursos Humanos",
+    nombre: "Argentina - Ushuaia",
     oficina: "Ushuaia",
     inicio: "08:00",
     fin: "17:00",
@@ -73,6 +100,7 @@ const scheduleData = [
   },
   {
     area: "Coordinación",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "19:00",
@@ -81,6 +109,7 @@ const scheduleData = [
   },
   {
     area: "Coordinación",
+    nombre: "España - Elche",
     oficina: "España",
     inicio: "10:00",
     fin: "20:15",
@@ -89,6 +118,7 @@ const scheduleData = [
   },
   {
     area: "Gestión",
+    nombre: "Córdoba - Argentina",
     oficina: "Córdoba",
     inicio: "10:00",
     fin: "19:00",
@@ -97,6 +127,7 @@ const scheduleData = [
   },
   {
     area: "Gestión",
+    nombre: "España - Elche",
     oficina: "España",
     inicio: "10:00",
     fin: "20:15",
@@ -105,6 +136,7 @@ const scheduleData = [
   },
   {
     area: "Gestión",
+    nombre: "Argentina - Ushuaia",
     oficina: "Ushuaia",
     inicio: "07:00",
     fin: "17:00",
@@ -113,6 +145,7 @@ const scheduleData = [
   },
   {
     area: "Marketing",
+    nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
@@ -121,11 +154,75 @@ const scheduleData = [
   },
   {
     area: "Marketing",
+    nombre: "España - Elche",
     oficina: "España",
     inicio: "10:00",
     fin: "18:15",
     breakInicio: "14:00",
     breakFin: "14:30",
+  },
+  {
+    area: "Marketing",
+    nombre: "México - DF",
+    oficina: "Mejico",
+    inicio: "06:00",
+    fin: "15:30",
+    breakInicio: "13:00",
+    breakFin: "14:00",
+  },
+  {
+    area: "Project-Manager",
+    nombre: "Argentina - Córdoba",
+    oficina: "Córdoba",
+    inicio: "08:00",
+    fin: "17:00",
+    breakInicio: "13:00",
+    breakFin: "14:00",
+  },
+  {
+    area: "Project-Manager",
+    nombre: "España - Elche",
+    oficina: "España",
+    inicio: "10:00",
+    fin: "18:15",
+    breakInicio: "14:00",
+    breakFin: "14:30",
+  },
+  {
+    area: "Community Manager",
+    nombre: "Chile - Santiago",
+    oficina: "Chile",
+    inicio: "8:00",
+    fin: "18:30",
+    breakInicio: "13:00",
+    breakFin: "14:30",
+  },
+  {
+    area: "Community Manager",
+    nombre: "Colombia - Medellin",
+    oficina: "Colombia",
+    inicio: "8:00",
+    fin: "17:00",
+    breakInicio: "16:00",
+    breakFin: "17:00",
+  },
+  {
+    area: "Community Manager",
+    nombre: "España - Elche",
+    oficina: "España",
+    inicio: "10:00",
+    fin: "18:15",
+    breakInicio: "14:00",
+    breakFin: "14:30",
+  },
+  {
+    area: "Community Manager",
+    nombre: "Argentina - Córdoba",
+    oficina: "Córdoba",
+    inicio: "08:00",
+    fin: "17:00",
+    breakInicio: "13:00",
+    breakFin: "14:00",
   },
 ];
 
