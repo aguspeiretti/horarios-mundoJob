@@ -122,7 +122,7 @@ const scheduleData = [
     area: "Marketing",
     nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
-    inicio: "08:00",
+    inicio: "07:00",
     fin: "17:00",
     breakInicio: "13:00",
     breakFin: "14:00",
@@ -178,8 +178,8 @@ const scheduleData = [
     oficina: "Colombia",
     inicio: "8:00",
     fin: "17:00",
-    breakInicio: "16:00",
-    breakFin: "17:00",
+    breakInicio: "13:00",
+    breakFin: "14:00",
   },
   {
     area: "Community Manager",
@@ -241,8 +241,8 @@ const scheduleData = [
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
-    breakInicio: "12:00",
-    breakFin: "13:00",
+    breakInicio: "13:00",
+    breakFin: "14:00",
   },
 
   {
