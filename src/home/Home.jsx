@@ -17,7 +17,7 @@ const Home = () => {
       <div className="contenedor-principal ">
         <div className="bg-container relative">
           <video
-            className="z-0 w-full h-full object-cover z-0 "
+            className="z-0 w-full h-full object-cover  "
             src={videoFondo}
             autoPlay
             loop
