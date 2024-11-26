@@ -42,8 +42,8 @@ const scheduleData = [
     oficina: "Colombia",
     inicio: "08:00",
     fin: "18:30",
-    breakInicio: "14:00",
-    breakFin: "16:00",
+    breakInicio: "13:00",
+    breakFin: "14:30",
   },
   {
     area: "Ventas",
