@@ -56,9 +56,9 @@ const scheduleData = [
   },
   {
     area: "Ventas",
-    nombre: "México - DF",
+    nombre: "México - CDMX",
     oficina: "Mejico",
-    inicio: "10:00",
+    inicio: "09:00",
     fin: "19:00",
     breakInicio: "14:00",
     breakFin: "16:00",
@@ -138,7 +138,7 @@ const scheduleData = [
   },
   {
     area: "Marketing",
-    nombre: "México - DF",
+    nombre: "México - CDMX",
     oficina: "Mejico",
     inicio: "06:00",
     fin: "15:30",
