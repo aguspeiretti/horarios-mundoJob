@@ -210,11 +210,13 @@ const ScheduleGridView = () => {
             onChange={(e) => setSelectedArea(e.target.value)}
             className="px-6 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
           >
-            {uniqueAreas.map((area) => (
-              <option key={area} value={area}>
-                {area === "all" ? "Todas las áreas" : area}
-              </option>
-            ))}
+            {uniqueAreas
+              .sort((a, b) => a.localeCompare(b)) // Ordenar alfabéticamente
+              .map((area) => (
+                <option key={area} value={area}>
+                  {area === "all" ? "Todas las áreas" : area}
+                </option>
+              ))}
           </select>
 
           <select
@@ -222,11 +224,13 @@ const ScheduleGridView = () => {
             onChange={(e) => setSelectedCountry(e.target.value)}
             className="px-6 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
           >
-            {uniqueCountries.map((country) => (
-              <option key={country} value={country}>
-                {country === "all" ? "Todos los países" : country}
-              </option>
-            ))}
+            {uniqueCountries
+              .sort((a, b) => a.localeCompare(b)) // Ordenar alfabéticamente
+              .map((country) => (
+                <option key={country} value={country}>
+                  {country === "all" ? "Todos los países" : country}
+                </option>
+              ))}
           </select>
 
           <input
