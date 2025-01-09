@@ -21,6 +21,8 @@ import scheduleData from "../nuevoWidget/schedulData";
 
 const ScheduleGridView = () => {
   const [selectedArea, setSelectedArea] = useState("all");
+  const [selectedCountry, setSelectedCountry] = useState("all");
+  const [nameFilter, setNameFilter] = useState(""); // Filtro por nombre
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeId, setActiveId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -56,6 +58,8 @@ const ScheduleGridView = () => {
     })
   );
 
+  console.log(scheduleData);
+
   const timeZones = {
     Córdoba: "America/Argentina/Cordoba",
     Colombia: "America/Bogota",
@@ -69,6 +73,10 @@ const ScheduleGridView = () => {
   const uniqueAreas = [
     "all",
     ...new Set(scheduleData.map((item) => item.area)),
+  ];
+  const uniqueCountries = [
+    "all",
+    ...new Set(scheduleData.map((item) => item.nombre)),
   ];
 
   useEffect(() => {
@@ -118,7 +126,10 @@ const ScheduleGridView = () => {
   };
 
   const filteredData = scheduleData.filter(
-    (item) => selectedArea === "all" || item.area === selectedArea
+    (item) =>
+      (selectedArea === "all" || item.area === selectedArea) &&
+      (selectedCountry === "all" || item.nombre === selectedCountry) &&
+      item.nombre.toLowerCase().includes(nameFilter.toLowerCase()) // Filtrado por nombre
   );
 
   function groupSchedulesByArea(data) {
@@ -205,38 +216,55 @@ const ScheduleGridView = () => {
               </option>
             ))}
           </select>
+
+          <select
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+            className="px-6 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
+          >
+            {uniqueCountries.map((country) => (
+              <option key={country} value={country}>
+                {country === "all" ? "Todos los países" : country}
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="text"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+            placeholder="Buscar por nombre"
+            className="px-4 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
+          />
         </div>
       </div>
 
-      {isMobile ? (
-        content
-      ) : (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          onDragCancel={handleDragCancel}
-        >
-          <SortableContext items={areaOrder} strategy={rectSortingStrategy}>
-            {content}
-          </SortableContext>
-          <DragOverlay adjustScale={true}>
-            {activeId ? (
-              <SortableArea
-                id={activeId}
-                area={activeId}
-                schedules={groupedByArea[activeId]}
-                getCurrentTimeInZone={getCurrentTimeInZone}
-                isCurrentlyWorking={isCurrentlyWorking}
-                timeZones={timeZones}
-                isDragging={true}
-                overlay
-              />
-            ) : null}
-          </DragOverlay>
-        </DndContext>
-      )}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={areaOrder} strategy={rectSortingStrategy}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {areaOrder
+              .filter((area) => groupedByArea[area])
+              .map((area) => (
+                <SortableArea
+                  key={area}
+                  id={area}
+                  area={area}
+                  schedules={groupedByArea[area]}
+                  getCurrentTimeInZone={getCurrentTimeInZone}
+                  isCurrentlyWorking={isCurrentlyWorking}
+                  timeZones={timeZones}
+                  isMobile={isMobile}
+                />
+              ))}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };

@@ -30,7 +30,7 @@ const Home = () => {
               alt=""
             />
             <p className="text-white text-2xl md:text-4xl lg:text-[50px] text-center mt-8">
-              ¡Descubre el horario de los equipos!
+              ¡Descubre el horario en las distintas oficinas!
             </p>
           </div>
           <div className="bg-gradient-to-b from-transparent via-black/50 to-black h-[323px] w-full z-10 absolute bottom-0">
