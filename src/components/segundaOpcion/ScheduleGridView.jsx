@@ -125,12 +125,20 @@ const ScheduleGridView = () => {
     );
   };
 
-  const filteredData = scheduleData.filter(
-    (item) =>
+  const filteredData = scheduleData.filter((item) => {
+    const nameMatch = item.nombre
+      .toLowerCase()
+      .includes(nameFilter.toLowerCase());
+    const areaMatch = item.area
+      .toLowerCase()
+      .includes(nameFilter.toLowerCase());
+
+    return (
       (selectedArea === "all" || item.area === selectedArea) &&
       (selectedCountry === "all" || item.nombre === selectedCountry) &&
-      item.nombre.toLowerCase().includes(nameFilter.toLowerCase()) // Filtrado por nombre
-  );
+      (nameMatch || areaMatch) // Coincidencia en nombre o área
+    );
+  });
 
   function groupSchedulesByArea(data) {
     return data.reduce((acc, item) => {
@@ -237,7 +245,7 @@ const ScheduleGridView = () => {
             type="text"
             value={nameFilter}
             onChange={(e) => setNameFilter(e.target.value)}
-            placeholder="Buscar por nombre"
+            placeholder="Buscar por nombre o área"
             className="px-4 py-2 bg-[#6B606F] text-white rounded-md border border-gray-700 focus:ring-2 focus:ring-purple-900 focus:outline-none"
           />
         </div>
