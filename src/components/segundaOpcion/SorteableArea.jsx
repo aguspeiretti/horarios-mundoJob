@@ -118,17 +118,38 @@ export function SortableArea({
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 text-sm mt-2">
-                <div className="text-gray-400">
-                  Horario:{" "}
-                  <span className="text-white">
-                    {schedule.inicio} - {schedule.fin}
-                  </span>
+                <div className="flex flex-col gap-1">
+                  <div className="text-gray-400">
+                    Horario:{" "}
+                    <span className="text-white">
+                      {schedule.inicio} - {schedule.fin}
+                    </span>
+                  </div>
+                  {schedule.iniciov ? (
+                    <div className="text-gray-400">
+                      Viernes:{" "}
+                      <span className="text-white">
+                        {schedule.iniciov} - {schedule.finv}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
-                <div className="text-gray-400">
-                  Break:{" "}
-                  <span className="text-white">
-                    {schedule.breakInicio} - {schedule.breakFin}
-                  </span>
+
+                <div className="flex flex-col gap-1">
+                  <div className="text-gray-400">
+                    Break:{" "}
+                    <span className="text-white">
+                      {schedule.breakInicio} - {schedule.breakFin}
+                    </span>
+                  </div>
+                  {schedule.iniciov ? (
+                    <div className="text-gray-400">
+                      Break:{" "}
+                      <span className="text-white">
+                        {schedule.breakIniciov} - {schedule.breakFinv}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
