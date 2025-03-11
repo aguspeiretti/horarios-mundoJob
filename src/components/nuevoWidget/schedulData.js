@@ -264,7 +264,7 @@ const scheduleData = [
     inicio: "08:00",
     fin: "17:00",
     breakInicio: "13:00",
-    breakFin: "14:00",
+    breakFin: "13.15",
   },
 ];
 
