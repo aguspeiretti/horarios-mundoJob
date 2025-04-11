@@ -265,6 +265,15 @@ const scheduleData = [
     breakInicio: "13:00",
     breakFin: "14:00",
   },
+  {
+    area: "RRHH-interno",
+    nombre: "España - Elche",
+    oficina: "España",
+    inicio: "10:00",
+    fin: "18:15",
+    breakInicio: "14:00",
+    breakFin: "14:30",
+  },
 
   {
     area: "RRHH-Profesionales",
