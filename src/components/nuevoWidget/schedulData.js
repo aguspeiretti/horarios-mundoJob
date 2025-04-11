@@ -273,6 +273,10 @@ const scheduleData = [
     fin: "18:15",
     breakInicio: "14:00",
     breakFin: "14:30",
+    iniciov: "10.00",
+    finv: "18.30",
+    breakIniciov: "14.00",
+    breakFinv: "14.30",
   },
 
   {
