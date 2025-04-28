@@ -235,8 +235,8 @@ const scheduleData = [
     oficina: "Córdoba",
     inicio: "08:00",
     fin: "17:00",
-    breakInicio: "12:00",
-    breakFin: "13:00",
+    breakInicio: "14:00",
+    breakFin: "15:00",
   },
   {
     area: "RRHH-Profesionales",
