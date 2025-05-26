@@ -133,6 +133,14 @@ export function SortableArea({
                       </span>
                     </div>
                   ) : null}
+                  {schedule.inicioE ? (
+                    <div className="text-gray-400">
+                      {schedule.nombreE}:{" "}
+                      <span className="text-white">
+                        {schedule.inicioE} - {schedule.finE}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex flex-col gap-1">
@@ -147,6 +155,14 @@ export function SortableArea({
                       Break:{" "}
                       <span className="text-white">
                         {schedule.breakIniciov} - {schedule.breakFinv}
+                      </span>
+                    </div>
+                  ) : null}
+                  {schedule.inicioE ? (
+                    <div className="text-gray-400">
+                      Break:{" "}
+                      <span className="text-white">
+                        {schedule.breakInicioE} - {schedule.breakFinE}
                       </span>
                     </div>
                   ) : null}
