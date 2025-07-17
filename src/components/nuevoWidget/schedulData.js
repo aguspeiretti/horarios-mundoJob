@@ -41,7 +41,7 @@ const scheduleData = [
     nombre: "Colombia - Bogotá",
     oficina: "Colombia",
     inicio: "08:00",
-    fin: "18:30",
+    fin: "17:48",
     breakInicio: "13:00",
     breakFin: "14:30",
   },
