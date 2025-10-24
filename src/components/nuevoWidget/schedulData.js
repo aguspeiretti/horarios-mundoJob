@@ -135,15 +135,7 @@ const scheduleData = [
     breakIniciov: "14.00",
     breakFinv: "16.00",
   },
-  {
-    area: "Gestión",
-    nombre: "Argentina - Ushuaia",
-    oficina: "Ushuaia",
-    inicio: "07:00",
-    fin: "17:00",
-    breakInicio: "14:00",
-    breakFin: "14:45",
-  },
+
   {
     area: "Gestión",
     nombre: "Argentina - Ushuaia",
