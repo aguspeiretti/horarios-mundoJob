@@ -101,7 +101,7 @@ const scheduleData = [
     breakFinE: "14.00",
   },
   {
-    area: "Coordinación y gestión",
+    area: "Gestión y Coordinación",
     nombre: "España - Elche",
     oficina: "España",
     inicio: "9:30",
