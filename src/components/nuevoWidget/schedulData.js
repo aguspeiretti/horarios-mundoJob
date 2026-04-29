@@ -87,7 +87,7 @@ const scheduleData = [
     breakFin: "15:30",
   },
   {
-    area: "Auxiliar Coordinación",
+    area: "Auxiliares de coordinación y gestión",
     nombre: "Argentina - Córdoba",
     oficina: "Córdoba",
     inicio: "07:00",
